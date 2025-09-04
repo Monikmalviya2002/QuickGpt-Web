@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ChatWindow.css';
 import { Mycontext } from './Mycontext';
 import axios from 'axios';
 import {ScaleLoader} from "react-spinners";
+import Chat from './Chat.jsx';
 
 
 const ChatWindow = () => {
-         const { reply, setReply, prompt, setPrompt , currThreadId } = useContext(Mycontext);
+         const { reply, setReply, prompt, setPrompt , currThreadId,prevChats,setPrevChats } = useContext(Mycontext);
           const [loading , setLoading]  = useState(false);
 
            const getReply = async () => {
@@ -23,14 +24,33 @@ const ChatWindow = () => {
                       console.log(res.data);
 
                        setReply(res.data.reply);
-                        setLoading(false);
+                       
                     }
-
-                  catch (err) {   
+                     catch (err) {   
                console.log(err);
                    }
-                     };
 
+                    setLoading(false);
+                  }
+                    useEffect(()=>{
+                      if(prompt && reply){
+                        setPrevChats(prevChats=>(
+                          [...prevChats,{
+                            role:"user",
+                            content: prompt
+                          },{
+                            role: "assistant",
+                            content:reply
+                          }
+                        ]
+                        ))
+                      }
+                      setPrompt("")
+                    },[reply]);
+          
+
+                 
+                     
             
 
              return (
@@ -43,11 +63,12 @@ const ChatWindow = () => {
             <span className="userIcon"><i className="fa-solid fa-user"></i></span>
               </div>
             </div>
-            </div>
+            </div>  
+              <Chat></Chat>
 
                <ScaleLoader color ="#fff" loading={loading}>
-
                </ScaleLoader>
+                
             <div className='chatinput'>
              <div className='inputbox'>
              <input
