@@ -1,9 +1,22 @@
 .chats{
    max-width: 700px;
    padding: 8rem;
-   overflow-y: scroll;
+   overflow-y: auto;
+   scroll-behavior: smooth;
+    scrollbar-width: thin;                 
+   scrollbar-color:  #212121;
+   right: 0;
 }
-
+  .chats::-webkit-scrollbar{
+    width: 8px;
+  }
+  .chats::-webkit-scrollbar-thumb{
+           background-color: #212121;
+           border-radius: 4px;
+  }
+  .gptdiv{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
 
 .userDiv{
@@ -22,8 +35,12 @@
 
 }
 
-.gptMessage{
+.hljs{
+    border-radius: 15px !important;
+}
 
+pre{
+    white-space: pre-wrap;
 }
 
 .gptdiv{
