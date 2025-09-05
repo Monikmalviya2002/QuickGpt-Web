@@ -69,3 +69,23 @@ button:hover{
     text-align: center;
     border-top: solid rgba(255, 255, 255, 0.5);
 }
+
+.fa-trash{
+    right: 0;
+    position: absolute;
+    opacity: 0;
+}
+
+.history li:hover .fa-trash{
+    opacity: 1;
+    color: #fff;
+} 
+
+.fa-trash:hover{
+    color: red !important;
+}
+
+.highlighted{
+    background-color: rgba(180, 180, 180, 0.05);
+    border-radius: 10px;
+}

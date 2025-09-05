@@ -2,7 +2,7 @@
    max-width: 700px;
    padding: 8rem;
    overflow-y: auto;
-   scroll-behavior: smooth;
+   
     scrollbar-width: thin;                 
    scrollbar-color:  #212121;
    right: 0;

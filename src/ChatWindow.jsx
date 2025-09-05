@@ -9,7 +9,7 @@ import Chat from './Chat.jsx';
 const ChatWindow = () => {
          const { reply, setReply, prompt, setPrompt , currThreadId,prevChats,setPrevChats } = useContext(Mycontext);
           const [loading , setLoading]  = useState(false);
-
+          const[isopen ,setIsopen] = useState(false);
            const getReply = async () => {
                      setLoading(true);
               
@@ -51,7 +51,10 @@ const ChatWindow = () => {
 
                  
                      
+                const handleDropdown = ()=>{
+                    setIsopen(!isopen);
             
+                }
 
              return (
            <div className='chatwindow'>
@@ -59,11 +62,22 @@ const ChatWindow = () => {
            <span> QuickGpt <i className="fa-solid fa-chevron-down"></i></span>
            
                <div className='user'>
-             <div className='usericon'>
+             <div className='usericon' onClick={handleDropdown}>
             <span className="userIcon"><i className="fa-solid fa-user"></i></span>
               </div>
             </div>
             </div>  
+              
+              {
+                   isopen && 
+                   <div className='dropDown'>
+          
+             <div className='dropdownItems'> <i class="fa-solid fa-gear"></i>Settings</div>
+             <div className='dropdownItems'><i className="fa-solid fa-arrow-up-from-bracket"></i>Upgrade Plan</div>
+              <div className='dropdownItems'><i class="fa-solid fa-arrow-right-from-bracket"></i>log out</div>
+                   </div>
+                  
+              }
               <Chat></Chat>
 
                <ScaleLoader color ="#fff" loading={loading}>
