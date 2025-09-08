@@ -99,7 +99,7 @@ return (
       </div>
     </div>
 
-    {/* dropdown only */}
+   
     {isopen && (
       <div className="dropDown">
         <div className="dropdownItems">
@@ -118,7 +118,7 @@ return (
       </div>
     )}
 
-    {/* rest of chat UI */}
+    
     <Chat />
 
     <ScaleLoader color="#fff" loading={loading} />

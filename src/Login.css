@@ -28,7 +28,19 @@
 
 .register p{
     color: black;
+    margin-top: 2px;
 }
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+  #para{
+    margin-top: 2px;
+  } 
 
 #input{
     min-width: 50vh;   
