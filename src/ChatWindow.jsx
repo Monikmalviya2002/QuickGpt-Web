@@ -4,12 +4,18 @@ import { Mycontext } from './Mycontext';
 import axios from 'axios';
 import {ScaleLoader} from "react-spinners";
 import Chat from './Chat.jsx';
+import { useNavigate } from 'react-router-dom';
+import Login from './Login.jsx';
 
 
 const ChatWindow = () => {
          const { reply, setReply, prompt, setPrompt , currThreadId,prevChats,setPrevChats } = useContext(Mycontext);
           const [loading , setLoading]  = useState(false);
           const[isopen ,setIsopen] = useState(false);
+            const navigate = useNavigate();
+
+
+
            const getReply = async () => {
                      setLoading(true);
               
@@ -48,64 +54,96 @@ const ChatWindow = () => {
                       setPrompt("")
                     },[reply]);
           
-
-                 
-                     
+                    
                 const handleDropdown = ()=>{
                     setIsopen(!isopen);
             
                 }
 
-             return (
-           <div className='chatwindow'>
-            <div className='navbar'>
-           <span> QuickGpt <i className="fa-solid fa-chevron-down"></i></span>
-           
-               <div className='user'>
-             <div className='usericon' onClick={handleDropdown}>
-            <span className="userIcon"><i className="fa-solid fa-user"></i></span>
-              </div>
-            </div>
-            </div>  
+                       
+                     const handleLogout = async () => {
+                              try {
+                      
               
-              {
-                   isopen && 
-                   <div className='dropDown'>
-          
-             <div className='dropdownItems'> <i class="fa-solid fa-gear"></i>Settings</div>
-             <div className='dropdownItems'><i className="fa-solid fa-arrow-up-from-bracket"></i>Upgrade Plan</div>
-              <div className='dropdownItems'><i class="fa-solid fa-arrow-right-from-bracket"></i>log out</div>
-                   </div>
+                       const res = await axios.post(
+                  "http://localhost:7777/api/logout",
+                         {},
+                          { withCredentials: true }
+                        );
+                        console.log("Logout success:", res.data);
+                            
+                          navigate("/Login");
+                      
+                         }catch (err) {
+                         console.error("Auth error:", err.response?.data || err.message);
                   
-              }
-              <Chat></Chat>
+                         }
+                     }
+                      
+                      
+                    
+                     
+return (
+  <div className="chatwindow">
+    <div className="navbar">
+      <span>
+        QuickGpt <i className="fa-solid fa-chevron-down"></i>
+      </span>
 
-               <ScaleLoader color ="#fff" loading={loading}>
-               </ScaleLoader>
-                
-            <div className='chatinput'>
-             <div className='inputbox'>
-             <input
-             placeholder="Ask anything"
+      <div className="user">
+        <div className="usericon" onClick={handleDropdown}>
+          <span className="userIcon">
+            <i className="fa-solid fa-user"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    {/* dropdown only */}
+    {isopen && (
+      <div className="dropDown">
+        <div className="dropdownItems">
+          <i className="fa-solid fa-gear"></i> Settings
+        </div>
+        <div className="dropdownItems">
+          <i className="fa-solid fa-arrow-up-from-bracket"></i> Upgrade Plan
+        </div>
+        <div
+          className="dropdownItems"
+          onClick={handleLogout}
+          style={{ cursor: "pointer" }}
+        >
+          <i className="fa-solid fa-arrow-right-from-bracket"></i> Log out
+        </div>
+      </div>
+    )}
+
+    {/* rest of chat UI */}
+    <Chat />
+
+    <ScaleLoader color="#fff" loading={loading} />
+
+    <div className="chatinput">
+      <div className="inputbox">
+        <input
+          placeholder="Ask anything"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-           onKeyDown={(e)=> e.key==="Enter" ? getReply() : ""}
-          />
+          onKeyDown={(e) => (e.key === "Enter" ? getReply() : "")}
+        />
+        <span id="submit" onClick={getReply}>
+          <i className="fa-solid fa-paper-plane"></i>
+        </span>
+      </div>
 
-              
-               <span id='submit'onClick={getReply}><i className="fa-solid fa-paper-plane"></i></span>
-               
-               </div>
-             
-              <p className='info'>QuickGpt can make mistakes. Check important info. See Cookie Preferences.</p>
-             
-             </div>
-            </div>
-    
+      <p className="info">
+        QuickGpt can make mistakes. Check important info. See Cookie
+        Preferences.
+      </p>
+    </div>
+  </div>
+);
+}
 
 
-
-  )
-};
 export default ChatWindow;
-
