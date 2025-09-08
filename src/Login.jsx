@@ -23,8 +23,8 @@ const Login = () => {
           { withCredentials: true }
         );
         console.log("Login success:", res.data);
-        alert("Logged in successfully!");
-        navigate("/chat");
+      
+        navigate("/");
       } else {
         // signup
         const res = await axios.post(
